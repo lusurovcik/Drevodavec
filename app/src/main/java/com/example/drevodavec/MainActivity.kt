@@ -1,8 +1,8 @@
 package com.example.drevodavec
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
+import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
@@ -121,8 +121,9 @@ class MainActivity : AppCompatActivity() {
 
         val buttonSync = findViewById<Button>(R.id.button_save)
         buttonSync.setOnClickListener {
-            val dir = getExternalFilesDir(this)
-            val file = File(dir.toString(), outputFileName)
+            val file = File(
+                getExternalFilesDir().toString()
+                , Environment.DIRECTORY_DOWNLOADS + "/" +outputFileName)
            try {
                 val treeName = findViewById<TextView>(R.id.TextViewTreeSelection)
                 val treeSize = findViewById<EditText>(R.id.EditTextTreeSize)
@@ -149,10 +150,9 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(applicationContext,"Používam $outputFileName",Toast.LENGTH_SHORT).show()
     }
 
-    private fun getExternalFilesDir(context: Context): File? {
-        val dir1 = context.getExternalFilesDir(null as String?)
+    private fun getExternalFilesDir(): File? {
+        val dir1 = Environment.getExternalStorageDirectory()
         println("FML: ${dir1?.absolutePath}")
-        dir1 ?: context.filesDir
         return dir1
     }
 
