@@ -3,6 +3,7 @@ package com.example.drevodavec
 import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Environment
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.title == newFileBtnTitle)
         {
-            updateOutFileName()
+            filenameAlert()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -142,11 +143,35 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun filenameAlert() {
+        var userInput : String
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Názov súboru")
 
-    private fun  updateOutFileName() {
+        val input = EditText(this)
+
+        input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        builder.setView(input)
+
+
+        builder.setPositiveButton(
+            "OK"
+        ) { _, _ ->
+            userInput = input.text.toString()
+            updateOutFileName(userInput)
+        }
+        builder.setNegativeButton(
+            "Cancel"
+        ) { dialog, which -> dialog.cancel() }
+
+        builder.show()
+    }
+
+    private fun  updateOutFileName(customName: String="") {
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")
-        outputFileName = "stromy_" + current.format(formatter).toString() + ".txt"
+        outputFileName =
+            "stromy_" + current.format(formatter).toString() + customName + ".txt"
         Toast.makeText(applicationContext,"Používam $outputFileName",Toast.LENGTH_SHORT).show()
     }
 
