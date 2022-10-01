@@ -17,12 +17,13 @@ class MainActivity : AppCompatActivity() {
     private val treeNames = listOf(
         "dub",
         "buk",
-        "lip",
+        "hrb",
         "jav",
         "jas",
         "jed",
         "smr",
-        "bor"
+        "bor",
+        "smc"
     )
 
     private val sizeNumbers = generateSequence(10) { it + 4 } // `it` is the previous element
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         buttons[5] = findViewById(R.id.button6)
         buttons[6] = findViewById(R.id.button7)
         buttons[7] = findViewById(R.id.button8)
+        buttons[8] = findViewById(R.id.button9)
 
         treeNames.mapIndexed { index, s -> buttons[index]?.text = s}
         for(button in buttons) {
