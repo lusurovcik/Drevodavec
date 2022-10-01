@@ -3,6 +3,8 @@ package com.example.drevodavec
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import java.io.File
@@ -26,11 +28,25 @@ class MainActivity : AppCompatActivity() {
     private val sizeNumbers = generateSequence(10) { it + 4 } // `it` is the previous element
     private val treeSizes = sizeNumbers.take(18).toList().map { it.toString() }.toTypedArray()
     private var outputFileName = "example.txt"
+    private val newFileBtnTitle = "Nový súbor"
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menu?.add(newFileBtnTitle)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.title == newFileBtnTitle)
+        {
+            updateOutFileName()
+        }
+        return super.onOptionsItemSelected(item)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         updateOutFileName()
+
         val tableLayoutTree = findViewById<TableLayout>(R.id.TableLayoutTree)
         var treeBtnCnt = 0
         for (i in 0..tableLayoutTree.childCount) {
@@ -120,11 +136,6 @@ class MainActivity : AppCompatActivity() {
                 ) { dialog, _ -> dialog.dismiss() }
                 alertDialog.show()
             }
-        }
-
-        val buttonCreateNewFile = findViewById<Button>(R.id.button_new_file)
-        buttonCreateNewFile.setOnClickListener {
-            updateOutFileName()
         }
     }
 
